@@ -1,0 +1,44 @@
+import { expect, test } from '@playwright/test'
+import HomePage from '../pages/homepage.spec'
+
+
+test('Successfull LogIn', async({ browser , baseURL }) => {
+  
+  // Launch the browser
+  const context = await browser.newContext();
+  // Set local storage key-value pair
+  (await context).addInitScript(() => {
+    window.localStorage.setItem('hzwzmhvhbofhtmyu','true');
+  });
+  // Open a new page in the context
+  const page = await context.newPage();
+  const homepage = new HomePage(page);
+  await page.goto(`${baseURL}`);
+  await homepage.accountLogin("anatolie.molosag@ext.magiceden.io");
+  await page.pause();
+  const title = await page.title();
+  await expect(title).toBe('Magic Eden - US NFT Marketplace')
+  
+})
+
+test.only('Login with invalid one time passcode', async({ browser , baseURL }) => {
+  
+  // Launch the browser
+  const context = await browser.newContext();
+  // Set local storage key-value pair
+  (await context).addInitScript(() => {
+    window.localStorage.setItem('hzwzmhvhbofhtmyu','true');
+  });
+  // Open a new page in the context
+  const page = await context.newPage();
+  const homepage = new HomePage(page);
+  await page.goto(`${baseURL}`);
+  await homepage.accountLogin("anatolie.molosag+102@ext.magiceden.io");
+  await homepage.enterOneTimePassCode('1','1','1','1','1','1');
+  // await page.pause();
+  const errorMessage = await homepage.errorMessage();
+  await expect(errorMessage).toBe('The code you entered is incorrect. Please try again.')
+  // await page.pause();
+  
+})
+
