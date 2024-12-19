@@ -14,8 +14,6 @@ export default class HomePage{
         await this.page.click("(//button[contains(text(), 'Connect')])[2]")
         await this.page.locator("div[class='dynamic-shadow-dom'] .input").fill(email);
         await this.page.click("div[class='dynamic-shadow-dom'] button[type='submit']");
-        // const shadowRoot = this.page.locator("div[class='dynamic-shadow-dom']");
-        // await shadowRoot.locator("button[type='submit']").click();
     }
 
     async enterOneTimePassCode(digit1,digit2,digit3,digit4,digit5,digit6){
