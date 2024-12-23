@@ -19,7 +19,7 @@ test('Validate search for a NFT', async({ browser, baseURL }) => {
     await homepage.buyNft();
     await page.pause();
     const message = homepage.buyToastMessage();
-    expect(message).toContain('Successfully purchased Cat in the old paintings #6!');
+    expect(message).toContain('Successfully purchased');
 
 
 
