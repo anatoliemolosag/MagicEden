@@ -6,16 +6,18 @@ export default class HomePage{
     constructor( page ){
         this.page = page; 
         this.searchBar = this.page.locator("//input[@placeholder='Search collections on Magic Eden']");
-
+        this.connectBttn = this.page.locator("(//button[contains(text(), 'Connect')])[2]");
+        this.emailInput = this.page.locator("div[class='dynamic-shadow-dom'] .input");
+        this.submitBttn = this.page.locator("div[class='dynamic-shadow-dom'] button[type='submit']");
     }
 
     async clickConnectWalletButton(){
-        await this.page.click("(//button[contains(text(), 'Connect')])[2]")
+        await this.connectBttn.click();
     }
 
     async accountLogin(email){
-        await this.page.locator("div[class='dynamic-shadow-dom'] .input").fill(email);
-        await this.page.click("div[class='dynamic-shadow-dom'] button[type='submit']");
+        await this.emailInput.fill(email);
+        await this.submitBttn.click();
     }
 
     async enterOneTimePassCode(digit1,digit2,digit3,digit4,digit5,digit6){
@@ -32,22 +34,15 @@ export default class HomePage{
     };
 
     async searchForNft(name){
+       await this.searchBar.click();
        await this.searchBar.fill(name);
        await this.page.getByText('Oriental Vibes').first().click();
-
-
-    //    const searchNftLocator = "//div[@data-index='1']";
-    //    await this.page.locator(searchNftLocator).waitFor({ state : 'visible', timeout : 6000})
-    //    await this.page.locator(searchNftLocator).click();
-
-        //  const nft = "//span[contains(text(),'Oriental Vibes')]";
-        //  await this.page.locator(nft).click();
     }
 
-    // async buyNft(){
-    //     await this.page.locator("//div[@data-index='0']").click();
-    //     await this.page.locator("//button[contains(text(),'Buy ')]").click();
-    // }
+    async buyNft(){
+        await this.page.locator("//div[@data-index='0']").hover();
+        await this.page.locator("//button[contains(text(),'Buy ')]").click();
+    }
 
     // async buyToastMessage(){
     //     return this.page.locator("//div[contains(text(),'Successfully')]")

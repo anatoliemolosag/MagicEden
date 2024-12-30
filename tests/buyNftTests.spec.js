@@ -12,13 +12,11 @@ test('Validate search for a NFT', async({ baseURL }) => {
     await page.goto(`${baseURL}`);
     await homepage.clickConnectWalletButton();
     await homepage.accountLogin("anatolie.molosag@ext.magiceden.io");
-    await page.pause();
     await homepage.searchForNft("Oriental Vibes");
+    await homepage.buyNft();
     await page.pause();
-    // await homepage.buyNft();
-    // await page.pause();
-    // const message = homepage.buyToastMessage();
-    // expect(message).toContain('Successfully purchased');
+    const message = homepage.buyToastMessage();
+    expect(message).toContain('Successfully purchased');
 
 
 })
