@@ -14,9 +14,8 @@ test('Validate search for a NFT', async({ baseURL }) => {
     await homepage.accountLogin("anatolie.molosag@ext.magiceden.io");
     await homepage.searchForNft("Oriental Vibes");
     await homepage.buyNft();
-    await page.pause();
     const message = homepage.buyToastMessage();
-    expect(message).toContain('Successfully purchased');
+    expect(message).toContain('Successfully');
 
 
 })

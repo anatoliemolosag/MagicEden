@@ -41,12 +41,15 @@ export default class HomePage{
 
     async buyNft(){
         await this.page.locator("//div[@data-index='0']").hover();
+        await this.page.locator("//div[@data-index='0']").click();
         await this.page.locator("//button[contains(text(),'Buy ')]").click();
     }
 
-    // async buyToastMessage(){
-    //     return this.page.locator("//div[contains(text(),'Successfully')]")
-    // }
+    async buyToastMessage(){
+        const toastLocator = await this.page.locator("//div[contains(text(),'Successfully')]");
+        await toastLocator.waitFor({ state: 'visible' });
+        return await toastLocator.textContent();
+    }
     
 
 }
