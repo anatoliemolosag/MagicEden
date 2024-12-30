@@ -1,9 +1,12 @@
 import { Page } from '@playwright/test'
+import { timeout } from '../playwright.config';
 
 export default class HomePage{
 
     constructor( page ){
         this.page = page; 
+        this.searchBar = this.page.locator("//input[@placeholder='Search collections on Magic Eden']");
+
     }
 
     async clickConnectWalletButton(){
@@ -28,19 +31,27 @@ export default class HomePage{
         return await this.page.locator("div[class='dynamic-shadow-dom'] div[class='error-container error-container--error email-verification__error-message']").textContent();
     };
 
-    async searchNft(name){
-        await this.page.locator("#react-select-header-async-search-input").fill(name);
-        await this.page.locator("//div[@data-index='1']").click();
+    async searchForNft(name){
+       await this.searchBar.fill(name);
+       await this.page.getByText('Oriental Vibes').first().click();
+
+
+    //    const searchNftLocator = "//div[@data-index='1']";
+    //    await this.page.locator(searchNftLocator).waitFor({ state : 'visible', timeout : 6000})
+    //    await this.page.locator(searchNftLocator).click();
+
+        //  const nft = "//span[contains(text(),'Oriental Vibes')]";
+        //  await this.page.locator(nft).click();
     }
 
-    async buyNft(){
-        await this.page.locator("//div[@data-index='0']").click();
-        await this.page.locator("//button[contains(text(),'Buy ')]").click();
-    }
+    // async buyNft(){
+    //     await this.page.locator("//div[@data-index='0']").click();
+    //     await this.page.locator("//button[contains(text(),'Buy ')]").click();
+    // }
 
-    async buyToastMessage(){
-        return this.page.locator("//div[contains(text(),'Successfully')]")
-    }
+    // async buyToastMessage(){
+    //     return this.page.locator("//div[contains(text(),'Successfully')]")
+    // }
     
 
 }
