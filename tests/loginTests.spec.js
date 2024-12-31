@@ -33,7 +33,7 @@ test.only('Login with invalid one time passcode', async({ browser , baseURL }) =
   await homepage.clickConnectWalletButton();
   await homepage.accountLogin("anatolie.molosag+102@ext.magiceden.io");
   await homepage.enterOneTimePassCode('1','1','1','1','1','1');
-  const errorMessage = await homepage.errorMessage();
+  const errorMessage = await homepage.loginErrorMessage();
   await expect(errorMessage).toBe('The code you entered is incorrect. Please try again.')
 
 });

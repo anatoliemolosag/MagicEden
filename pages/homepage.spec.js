@@ -29,26 +29,28 @@ export default class HomePage{
         await this.page.locator("div[class='dynamic-shadow-dom'] input[data-testid='5']").fill(digit6);
     }
 
-    async errorMessage(){
+    async loginErrorMessage(){
         return await this.page.locator("div[class='dynamic-shadow-dom'] div[class='error-container error-container--error email-verification__error-message']").textContent();
     };
 
     async searchForNft(name){
+       await this.searchBar.waitFor( {state: 'visible', timeout: 10000});
        await this.searchBar.click();
        await this.searchBar.fill(name);
        await this.page.getByText('Oriental Vibes').first().click();
     }
 
     async buyNft(){
-        await this.page.locator("//div[@data-index='0']").hover();
-        await this.page.locator("//div[@data-index='0']").click();
-        await this.page.locator("//button[contains(text(),'Buy ')]").click();
+        const nftElement = await this.page.locator("//div[@data-index='0']/div/div/div/img");
+        await nftElement.hover();
+        await nftElement.click();
+
+        const buyNftBttn = await this.page.locator("//button[contains(text(),'Buy ')]");
+        await buyNftBttn.click();
     }
 
-    async buyToastMessage(){
-        const toastLocator = await this.page.locator("//div[contains(text(),'Successfully')]");
-        await toastLocator.waitFor({ state: 'visible' });
-        return await toastLocator.textContent();
+    async toastMessage(){
+        return this.page.locator("//div[contains(text(),'Successfully')]").textContent();
     }
     
 
