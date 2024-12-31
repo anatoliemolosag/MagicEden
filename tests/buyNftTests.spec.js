@@ -18,6 +18,4 @@ test('Validate search for a NFT', async({ baseURL }) => {
     const toastMessage = homepage.toastMessage();
     console.log(toastMessage);
     expect(toastMessage).toContain('Successfully');
-
-
 })
