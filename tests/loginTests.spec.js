@@ -1,15 +1,14 @@
 import { expect, test } from '@playwright/test'
 import HomePage from '../pages/homepage.spec'
+import BrowserUtil from '../utils/BrowserUtil.spec';
 
 
-test('Successfull LogIn', async({ browser , baseURL }) => {
+test('Successfull LogIn', async({ baseURL }) => {
   
-  const context = await browser.newContext();
-  (await context).addInitScript(() => {
-    window.localStorage.setItem('hzwzmhvhbofhtmyu','true');
-  });
+  const browserUtilInstance = BrowserUtil.getInstance();
+  const context = await browserUtilInstance.createContextWithLocalStorage();
+  const page = await browserUtilInstance.createPageWithContext(context);
 
-  const page = await context.newPage();
   const homepage = new HomePage(page);
   await page.goto(`${baseURL}`);
   await homepage.clickConnectWalletButton();
@@ -20,18 +19,16 @@ test('Successfull LogIn', async({ browser , baseURL }) => {
   
 })
 
-test.only('Login with invalid one time passcode', async({ browser , baseURL }) => {
+test('Login with invalid one time passcode', async({ baseURL }) => {
   
-  const context = await browser.newContext();
-  (await context).addInitScript(() => {
-    window.localStorage.setItem('hzwzmhvhbofhtmyu','true');
-  });
+  const browserUtilInstance = BrowserUtil.getInstance();
+  const context = await browserUtilInstance.createContextWithLocalStorage();
+  const page = await browserUtilInstance.createPageWithContext(context);
 
-  const page = await context.newPage();
   const homepage = new HomePage(page);
   await page.goto(`${baseURL}`);
   await homepage.clickConnectWalletButton();
-  await homepage.accountLogin("anatolie.molosag+102@ext.magiceden.io");
+  await homepage.accountLogin("anatolie.molosag+1@ext.magiceden.io");
   await homepage.enterOneTimePassCode('1','1','1','1','1','1');
   const errorMessage = await homepage.loginErrorMessage();
   await expect(errorMessage).toBe('The code you entered is incorrect. Please try again.')

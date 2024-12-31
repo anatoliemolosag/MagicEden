@@ -37,7 +37,7 @@ export default class HomePage{
        await this.searchBar.waitFor( {state: 'visible', timeout: 10000});
        await this.searchBar.click();
        await this.searchBar.fill(name);
-       await this.page.getByText('Oriental Vibes').first().click();
+       await this.page.getByText('Phantom Messages').first().click();
     }
 
     async buyNft(){
@@ -45,12 +45,13 @@ export default class HomePage{
         await nftElement.hover();
         await nftElement.click();
 
-        const buyNftBttn = await this.page.locator("//button[contains(text(),'Buy ')]");
+        const buyNftBttn = await this.page.locator("//following-sibling::button[@type='button' and contains(text(),'Buy ')]");
         await buyNftBttn.click();
     }
 
     async toastMessage(){
-        return this.page.locator("//div[contains(text(),'Successfully')]").textContent();
+         const toastLocator = this.page.locator("//div[contains(text(),'Successfully')]");
+         return toastLocator;
     }
     
 
