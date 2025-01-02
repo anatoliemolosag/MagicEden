@@ -24,7 +24,7 @@ async buySolanaNft() {
     const firstNftElement = this.page.locator("//tr[11]/td[2]/div/div[contains(text(),'10')]");
     await firstNftElement.click();
 
-    const nftElement = await this.page.locator("//div[@data-index='1']/div/div/div/img");
+    const nftElement = await this.page.locator("//div[@data-index='2']/div/div/div/img");
     await nftElement.hover();
     await nftElement.click();
 

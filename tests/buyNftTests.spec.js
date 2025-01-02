@@ -45,15 +45,14 @@ test('Successfull Buy nft on Ethereum Network', async({ baseURL }) => {
     await ethereumPage.clickOnEthereumChain();
     await ethereumPage.sortFloor();
     await ethereumPage.buyEthereumNft();
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(8000);
     const toastMessage = await ethereumPage.toastMessage();
     console.log(await toastMessage.textContent());
     expect(await toastMessage.textContent()).toContain('Successfully ');    
 
 })
 
-test.only('Searching for a custom nft', async({ baseURL }) => {
-
+test('Searching for a custom nft', async({ baseURL }) => {
 
     const browserUtilInstance = BrowserUtil.getInstance();
     const context = await browserUtilInstance.createContextWithLocalStorage();
@@ -65,10 +64,7 @@ test.only('Searching for a custom nft', async({ baseURL }) => {
     await homepage.clickConnectWalletButton();
     await homepage.accountLogin(email);
     await homepage.searchForNft('Phantom Messages');
-
-    //write validation script
-
-
-
-
+    await page.waitForTimeout(5000);
+    const nftCollectionName = await homepage.nftCollectionName();
+    expect(await nftCollectionName).toContainText('Phantom Messages');
 })

@@ -38,9 +38,16 @@ export default class HomePage{
        await this.searchBar.waitFor( {state: 'visible', timeout: 10000});
        await this.searchBar.click();
        await this.searchBar.fill(name);
-       //await this.page.locator("//div[@data-index='1']/div/div/div/following-sibling::div[@class='tw-flex tw-flex-col tw-truncate']").click();
-       await this.page.getByText('Phantom Messages').first().click();
+       await this.page.locator("//img[@alt='Collections Phantom Messages profile image']").click();
+       //await this.page.getByText('Phantom Messages').first().click();
     }
+
+    async nftCollectionName(){
+        const nftText = await this.page.locator("//h1");
+        return await nftText;
+    }
+
+
     
 
 }
