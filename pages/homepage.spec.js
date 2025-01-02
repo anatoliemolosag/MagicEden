@@ -9,6 +9,7 @@ export default class HomePage{
         this.connectBttn = this.page.locator("(//button[contains(text(), 'Connect')])[2]");
         this.emailInput = this.page.locator("div[class='dynamic-shadow-dom'] .input");
         this.submitBttn = this.page.locator("div[class='dynamic-shadow-dom'] button[type='submit']");
+        this.accountModalBttn = this.page.locator("//div[@data-test-id='wallet-balance']/p");
     }
 
     async clickConnectWalletButton(){
@@ -18,7 +19,7 @@ export default class HomePage{
     async accountLogin(email){
         await this.emailInput.fill(email);
         await this.submitBttn.click();
-    }
+        }
 
     async enterOneTimePassCode(digit1,digit2,digit3,digit4,digit5,digit6){
         await this.page.locator("div[class='dynamic-shadow-dom'] input[data-testid='0']").fill(digit1);
@@ -37,21 +38,8 @@ export default class HomePage{
        await this.searchBar.waitFor( {state: 'visible', timeout: 10000});
        await this.searchBar.click();
        await this.searchBar.fill(name);
+       //await this.page.locator("//div[@data-index='1']/div/div/div/following-sibling::div[@class='tw-flex tw-flex-col tw-truncate']").click();
        await this.page.getByText('Phantom Messages').first().click();
-    }
-
-    async buyNft(){
-        const nftElement = await this.page.locator("//div[@data-index='0']/div/div/div/img");
-        await nftElement.hover();
-        await nftElement.click();
-
-        const buyNftBttn = await this.page.locator("//following-sibling::button[@type='button' and contains(text(),'Buy ')]");
-        await buyNftBttn.click();
-    }
-
-    async toastMessage(){
-         const toastLocator = this.page.locator("//div[contains(text(),'Successfully')]");
-         return toastLocator;
     }
     
 
