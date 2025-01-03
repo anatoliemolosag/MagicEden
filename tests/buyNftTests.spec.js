@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 import HomePage from '../pages/homePage.spec';
-import BrowserUtil from '../utils/BrowserUtil.spec';
 import EthereumPage from '../pages/ethereumPage.spec';
 import SolanaPage from '../pages/solanaPage.spec';
+import browserContext from '../utils/browserContext.spec';
 
 const email = "anatolie.molosag@ext.magiceden.io";
 
-test('Successfull Buy cNft on Solana Network', async({ baseURL }) => {
+test('Successfull Buy cNft on Solana Network', async ({ browser, baseURL }) => {
 
-    const browserUtilInstance = BrowserUtil.getInstance();
-    const context = await browserUtilInstance.createContextWithLocalStorage();
-    const page = await browserUtilInstance.createPageWithContext(context);
+    const browserCtx = new browserContext();
+    const context = await browserCtx.createContextWithLocalStorage(browser);
+    const page = await browserCtx.createPageWithContext(context);
 
     const homepage = new HomePage(page);
     const solanapage = new SolanaPage(page);
@@ -25,16 +25,16 @@ test('Successfull Buy cNft on Solana Network', async({ baseURL }) => {
     const toastMessage = await solanapage.toastMessage();
     console.log(await toastMessage.textContent());
     expect(await toastMessage.textContent()).toContain('Successfully ');
-    await BrowserUtil.getInstance().closeBrowser();
+    await browser.close();
 
 })
 
-test('Successfull Buy nft on Ethereum Network', async({ baseURL }) => {
+test('Successfull Buy nft on Ethereum Network', async ({ browser, baseURL }) => {
 
 
-    const browserUtilInstance = BrowserUtil.getInstance();
-    const context = await browserUtilInstance.createContextWithLocalStorage();
-    const page = await browserUtilInstance.createPageWithContext(context);
+    const browserCtx = new browserContext();
+    const context = await browserCtx.createContextWithLocalStorage(browser);
+    const page = await browserCtx.createPageWithContext(context);
 
     const homepage = new HomePage(page);
     const ethereumPage = new EthereumPage(page);
@@ -48,15 +48,16 @@ test('Successfull Buy nft on Ethereum Network', async({ baseURL }) => {
     await page.waitForTimeout(8000);
     const toastMessage = await ethereumPage.toastMessage();
     console.log(await toastMessage.textContent());
-    expect(await toastMessage.textContent()).toContain('Successfully ');    
+    expect(await toastMessage.textContent()).toContain('Successfully ');
+    await browser.close();
 
 })
 
-test('Searching for a custom nft', async({ baseURL }) => {
+test('Searching for a custom nft', async ({ browser, baseURL }) => {
 
-    const browserUtilInstance = BrowserUtil.getInstance();
-    const context = await browserUtilInstance.createContextWithLocalStorage();
-    const page = await browserUtilInstance.createPageWithContext(context);
+    const browserCtx = new browserContext();
+    const context = await browserCtx.createContextWithLocalStorage(browser);
+    const page = await browserCtx.createPageWithContext(context);
 
     const homepage = new HomePage(page);
 
@@ -67,4 +68,5 @@ test('Searching for a custom nft', async({ baseURL }) => {
     await page.waitForTimeout(5000);
     const nftCollectionName = await homepage.nftCollectionName();
     expect(await nftCollectionName).toContainText('Phantom Messages');
+    await browser.close();
 })
