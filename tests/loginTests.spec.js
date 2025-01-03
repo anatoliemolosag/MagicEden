@@ -13,13 +13,13 @@ test('Successfull LogIn', async({browser, baseURL }) => {
   const page = await browserCtx.createPageWithContext(context);
 
   const homepage = new HomePage(page);
-  
+
   await page.goto(`${baseURL}`);
   await homepage.clickConnectWalletButton();
   await homepage.accountLogin(email);
   const title = await page.title();
   await expect(title).toBe('Magic Eden - US NFT Marketplace')
-  await browser.close();
+  await page.close();
   
   
 })
@@ -39,7 +39,7 @@ test('Login with invalid one time passcode', async({browser, baseURL }) => {
   await homepage.enterOneTimePassCode('1','1','1','1','1','1');
   const errorMessage = await homepage.loginErrorMessage();
   await expect(errorMessage).toBe('The code you entered is incorrect. Please try again.')
-  await browser.close();
+  await page.close();
  
 });
 

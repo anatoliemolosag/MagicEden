@@ -25,7 +25,7 @@ test('Successfull Buy cNft on Solana Network', async ({ browser, baseURL }) => {
     const toastMessage = await solanapage.toastMessage();
     console.log(await toastMessage.textContent());
     expect(await toastMessage.textContent()).toContain('Successfully ');
-    await browser.close();
+    await page.close();
 
 })
 
@@ -49,7 +49,7 @@ test('Successfull Buy nft on Ethereum Network', async ({ browser, baseURL }) => 
     const toastMessage = await ethereumPage.toastMessage();
     console.log(await toastMessage.textContent());
     expect(await toastMessage.textContent()).toContain('Successfully ');
-    await browser.close();
+    await page.close();
 
 })
 
@@ -68,5 +68,5 @@ test('Searching for a custom nft', async ({ browser, baseURL }) => {
     await page.waitForTimeout(5000);
     const nftCollectionName = await homepage.nftCollectionName();
     expect(await nftCollectionName).toContainText('Phantom Messages');
-    await browser.close();
+    await page.close();
 })
